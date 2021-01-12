@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-image: url("sucai/bg3.jpg");
+            background-repeat: no-repeat;
+            background-size:cover;
+            background-position: center;
+            background-attachment: fixed;
+
+        }
+        #shopbox{
+            position: fixed;
+            z-index: 3;
+            width: 35%;
+            height: 300px;
+            display:none;
+            background-color: rgba(0,0,0,0.5)
+        }
+        #shopbox2{
+            position: fixed;
+            z-index: 3;
+            width: 35%;
+            height: 300px;
+            display:none;
+            background-color: rgba(0,0,0,0.5)
+        }
+        #bmbox1{
+            position: fixed;
+            z-index: 3;
+            width: 35%;
+            height: 300px;
+            display:none;
+            background-color: rgba(0,0,0,0.5)
+        }
+        #rmbox1{
+            position: fixed;
+            z-index: 3;
+            width: 35%;
+            height: 300px;
+            display:none;
+            background-color: rgba(0,0,0,0.5)
+        }
+        #mainbox{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #help{
+            margin-left: 200px;
+            cursor: pointer;
+        }
+        #helptext{
+            width: 380px;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            position: absolute;
+        }
+        #helptext button{
+            width:60%;
+            height: 50px;
+            margin-top: 50px;
+            margin-left: 50px;
+        }
+        #helptext img{
+            width: 50px;
+            height: 50px;
+            margin-top: 5px;
+            vertical-align: middle;
+        }
+        #shopinner,#shopinner2,#bminner1,#rminner1{
+            width: 60%;
+            height:90%;
+            background-color: black;
+            margin: auto;
+            margin-top: 10px;
+            font-size: 25px;
+            color: white;
+        }
+        #shopinner button,#shopinner2 button,#bminner1 button,#rminner1 button{
+            width: 90%;
+            height: 16%;
+            margin-left: 20px;
+            border: 0px;
+        }
+        #shopinner button:hover{
+            border: 2px solid orange;
+        }
+        #shopinner2 button:hover{
+            border: 2px solid orange;
+        }
+        #bminner1 button:hover{
+            border: 2px solid orange;
+        }
+        #rminner1 button:hover{
+            border: 2px solid orange;
+        }
+        canvas {
+            border: 20px solid;
+            float: left;
+        }
+        #left, #right {
+            width: 300px;
+            height: 765px;
+            background-color: rgba(0,0,0,0.5);
+            float: left;
+        }
+        #package {
+            margin: auto;
+            width: 90%;
+            height: 250px;
+            color: white;
+            margin-top: 20px;
+        }
+        #package img{
+            vertical-align: middle;
+        }
+        #left p {
+            width: 80%;
+            height: 50px;
+            margin: auto;
+            margin-top: 5px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+        }
+        #right p {
+            width: 80%;
+            height: 50px;
+            margin: auto;
+            margin-top: 5px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+        }
+        .keynum{
+            margin-left: 10px;
+        }
+        #rightinner{
+            margin: auto;
+            width: 90%;
+            height: 100px;
+            color: white;
+            margin-top: 20px;
+
+        }
+        #plug_in{
+            margin: auto;
+            width: 90%;
+            height: 150px;
+            border: 1px solid;
+            margin-top: 20px;
+        }
+        #open{
+            width: 80%;
+            height: 50px;
+            margin-left: 20px;
+        }
+        #exbox{
+            display: none;
+        }
+        #exbox button{
+            margin-left: 20px;
+            width: 100px;
+            height: 30px;
+        }
+        #upup,#downdown{
+            width: 80%;
+            height: 50px;
+            margin-left: 20px;
+        }
+        @keyframes out {
+            0%{
+                transform: translateX(-380);
+            }
+            100%{
+                transform: translateX(0px);
+            }
+        }
+        @keyframes back {
+            0%{
+                transform: translateX(0px);
+            }
+            100%{
+                transform: translateX(-380);
+            }
+        }
+        @keyframes out2 {
+            0%{
+                transform: translateX(-0);
+            }
+            100%{
+                transform: translateX(100px);
+            }
+        }
+        @keyframes back2 {
+            0%{
+                transform: translateX(100px);
+            }
+            100%{
+                transform: translateX(0);
+            }
+        }
+        #end{
+            width: 80%;
+            height: 50%;
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            position: absolute;
+            font-size: 30px;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body onload="onLoad()">
+
+<div id="helptext">
+    <img src="sucai/props/rs.png"><span>增加3点攻击力</span><br>
+    <img src="sucai/props/bs.png"><span>增加3点防御力</span><br>
+    <img src="sucai/props/ns.png"><span>增加20点攻击力与防御力</span><br>
+    <img src="sucai/props/rb.png"><span>增加200点生命值</span><br>
+    <img src="sucai/props/bb.png"><span>增加500点生命值</span><br>
+    <img src="sucai/props/kbox.png"><span>每种种类的钥匙数量加1</span><br>
+    <img src="sucai/props/sh1.png"><span>增加10点防御力</span><br>
+    <img src="sucai/props/sh2.png"><span>增加100点防御力</span><br>
+    <img src="sucai/props/sw1.png"><span>增加10点攻击力</span><br>
+    <img src="sucai/props/ex.png"><span>增加2000生命值、50点攻击力与防御力与200金币</span><br>
+    <button onclick="closehelp()">隐藏</button>
+</div>
+
+<div id="mainbox">
+<div id="shopbox">
+    <div id="shopinner">
+        <p>想要增加你的能力吗?如果你有25个金币,你可以任意选择一项</p>
+        <button onclick="shophp1()">增加800生命值</button>
+        <button onclick="shopatk1()">增加4点攻击力</button>
+        <button onclick="shopdef1()">增加4点防御</button>
+        <button onclick="closeshop1()">离开商店</button>
+    </div>
+</div>
+<div id="shopbox2">
+    <div id="shopinner2">
+        <p>想要增加你的能力吗?如果你有100个金币,你可以任意选择一项</p>
+        <button onclick="shophp2()">增加4000生命值</button>
+        <button onclick="shopatk2()">增加20点攻击力</button>
+        <button onclick="shopdef2()">增加20点防御</button>
+        <button onclick="closeshop2()">离开商店</button>
+    </div>
+</div>
+<div id="bmbox1">
+    <div id="bminner1">
+        <p>你好,英雄的人类，只要你有足够的经验，我就可以让你变得更强大:</p>
+        <button onclick="bmlevel()">提升一级(需要100点)</button>
+        <button onclick="bmatk()">增加攻击5(需要30点)</button>
+        <button onclick="bmdef()">增加防御5(需要30点)</button>
+        <button onclick="closebm()">离开商店</button>
+    </div>
+</div>
+<div id="rmbox1">
+    <div id="rminner1">
+        <p>相信你一定有特殊的需要,只要你有金币，我就可以帮你:</p>
+        <button onclick="buyy()">购买一把黄钥匙($10)</button>
+        <button onclick="buyb()">购买一把蓝钥匙($50)</button>
+        <button onclick="buyr()">购买一把红钥匙($100)</button>
+        <button onclick="closerm()">离开商店</button>
+    </div>
+</div>
+<div id="left">
+    <div style="border: 1px solid black;width: 80%;margin: auto">
+    <p id="playerhp"></p>
+    <p id="playerlevel"></p>
+    <p id="playeratk"></p>
+    <p id="playerdef"></p>
+    <p id="playercoin"></p>
+    <p id="playerexp"></p>
+    <p id="floor"></p>
+    </div>
+    <div id="package">
+        <div id="keyyellow" style="padding-top: 20px;padding-left: 20px"><img src="sucai/keyyellow.png"><span id="yellownum" class="keynum"></span></div>
+        <div id="keyblue" style="padding-top: 20px;padding-left: 20px"><img src="sucai/keyblue.png"><span id="bluenum" class="keynum"></span></div>
+        <div id="keyred" style="padding-top: 20px;padding-left: 20px"><img src="sucai/keyred.png"><span id="rednum" class="keynum"></span></div>
+    </div>
+    <div id="help"><img src="sucai/book.png" id="helpimg" width="80px" height="80px" onclick="showhelp()"></div>
+</div>
+<canvas id="cvs" width="725" height="725"></canvas>
+<div id="right">
+    <div style="margin: auto;width: 80%;border: 1px solid black">
+    <p>怪物属性</p>
+    <p id="enemyname"></p>
+    <p id="enemyhp"></p>
+    <p id="enemyatk"></p>
+    <p id="enemydef"></p>
+    <p id="enemypre"></p>
+    </div>
+    <div id="rightinner">
+    <button id="upup" onclick="up()">下一层</button>
+    <button id="downdown" onclick="down()">上一层</button>
+    </div>
+    <div id="plug_in">
+        <button id="open" onclick="openlist()">打不过了？点这里</button>
+        <div id="exbox">
+            <br/>
+            <button onclick="_atk()">+10攻击力</button><button onclick="_def()">+10防御力</button><br/>
+            <button onclick="_hp()">+1000生命值</button><button onclick="_key()">增加一把红钥匙</button>
+        </div>
+    </div>
+    <div id="tips">
+    <p>tips:</p>
+    </div>
+</div>
+
+    <!--<div id="end">-->
+        <!--<marquee direction="up">-->
+            <!--<span style="font-weight: bolder;font-size: 40px;color: white;">Welcom CSDN!</span>-->
+        <!--</marquee>-->
+    <!--</div>-->
+
+
+</div>
+<script>
+    move();
+    function move() {
+        helptext.style.transform = 'translateX(-380px)';
+    }
+    function closehelp() {
+        helptext.style.animation = 'back 2s forwards';
+        package.style.animation = 'back2 2s forwards';
+    }
+    function shophp1() {
+        if(game.people.coin>=25){
+            game.people.coin -=25;
+            game.people.hp += 800;
+            state();
+        }
+    }
+    function shopatk1() {
+        if(game.people.coin>=25){
+            game.people.coin -=25;
+            game.people.atk += 4;
+            state();
+        }
+    }
+    function shopdef1() {
+        if(game.people.coin>=25){
+            game.people.coin -=25;
+            game.people.def += 4;
+            state();
+        }
+    }
+    function closeshop1() {
+        shopbox.style.display = 'none'
+    }
+    function shophp2() {
+        if(game.people.coin>=100){
+            game.people.coin -=100;
+            game.people.hp += 4000;
+            state();
+        }
+    }
+    function shopatk2() {
+        if(game.people.coin>=100){
+            game.people.coin -=100;
+            game.people.atk += 20;
+            state();
+        }
+    }
+    function shopdef2() {
+        if(game.people.coin>=100){
+            game.people.coin -=100;
+            game.people.def += 20;
+            state();
+        }
+    }
+    function closeshop2() {
+        shopbox2.style.display = 'none'
+    }
+    function bmlevel() {
+        if(game.people.exp>=100){
+            game.people.exp -=100;
+            game.people.level++;
+            game.people.hp += 1000;
+            game.people.atk += 7;
+            game.people.def += 7;
+            state();
+        }
+    }
+    function bmatk() {
+        if(game.people.exp>=30){
+            game.people.exp -=30;
+            game.people.atk += 5;
+            state();
+        }
+    }
+    function bmdef() {
+        if(game.people.exp>=30){
+            game.people.exp -=30;
+            game.people.def += 5;
+            state();
+        }
+    }
+    function closebm() {
+        bmbox1.style.display = 'none';
+    }
+    function buyy() {
+        if(game.people.coin>=10){
+            game.people.coin -= 10;
+            game.people.keyyellow++;
+            state();
+        }
+    }
+    function buyb() {
+        if(game.people.coin>=50){
+            game.people.coin -= 50;
+            game.people.keyblue++;
+            state();
+        }
+    }
+    function buyr() {
+        if(game.people.coin>=100){
+            game.people.coin -= 50;
+            game.people.keyred++;
+            state();
+        }
+    }
+    function closerm() {
+        rmbox1.style.display = 'none';
+    }
+    function showhelp() {
+        helptext.style.animation = 'out 2s forwards';
+        package.style.animation = 'out2 2s forwards';
+    }
+    function openlist() {
+        exbox.style.display = 'block';
+    }
+    function _atk() {
+        game.people.atk += 10;
+        state();
+    }
+    function _def() {
+        game.people.def += 10;
+        state();
+    }
+    function _hp() {
+        game.people.hp += 1000;
+        state();
+    }
+    function _key() {
+        game.people.keyred += 1;
+        state();
+    }
+
+
+    var marqueeContent=new Array();
+    marqueeContent[0]="鼠标点击可以查看怪物属性哦";
+    marqueeContent[1]="多利用商店提升自己的属性";
+    marqueeContent[2]="在第四层可以用经验兑换自身属性";
+    marqueeContent[3]="打不过了就回头看看吧";
+    var marqueeInterval=new Array();
+    var marqueeId=0;
+    var marqueeDelay=3000;
+    var marqueeHeight=20;
+    function initMarquee() {
+        var str=marqueeContent[0];
+        document.write('<div id="marqueeBox" style="overflow:hidden;width:250px;margin-left:72%;margin-top:-80px;color:white;height:'+marqueeHeight+'px" onmouseover="clearInterval(marqueeInterval[0])" onmouseout="marqueeInterval[0]=setInterval(\'startMarquee()\',marqueeDelay)"><div>'+str+'</div></div>');
+        marqueeId++;
+        marqueeInterval[0]=setInterval("startMarquee()",marqueeDelay);
+    }
+    function startMarquee() {
+        var str=marqueeContent[marqueeId];
+        marqueeId++;
+        if(marqueeId>=marqueeContent.length) marqueeId=0;
+        if(document.getElementById("marqueeBox").childNodes.length==1) {
+            var nextLine=document.createElement('DIV');
+            nextLine.innerHTML=str;
+            document.getElementById("marqueeBox").appendChild(nextLine);
+        }
+        else {
+            document.getElementById("marqueeBox").childNodes[0].innerHTML=str;
+            document.getElementById("marqueeBox").appendChild(document.getElementById("marqueeBox").childNodes[0]);
+            document.getElementById("marqueeBox").scrollTop=0;
+        }
+        clearInterval(marqueeInterval[1]);
+        marqueeInterval[1]=setInterval("scrollMarquee()",20);
+    }
+    function scrollMarquee() {
+        document.getElementById("marqueeBox").scrollTop++;
+        if(document.getElementById("marqueeBox").scrollTop%marqueeHeight==(marqueeHeight-1)){
+            clearInterval(marqueeInterval[1]);
+        }
+    }
+    initMarquee();
+</script>
+<script src="enemy.js"></script>
+<script src="map01.js"></script>
+<script>
+    var ctx = cvs.getContext('2d');
+    var game = null;
+    var img = new Image();
+    img.src = 'sucai/n1.png';
+    function up() {
+        if(game.nmap.num<15){
+            game.nmap.num++;
+        }
+        state();
+    }
+    function down() {
+        if(game.nmap.num>1){
+            game.nmap.num--;
+        }
+        state();
+    }
+    function Game() {
+        var _this = this;
+        this.timer = null;
+        this.nmap = new Map(1);
+        this.people = new Playerdate();
+        this.update = function () {
+            _this.timer = setInterval(function () {
+                //ctx.clearRect(0,0,cvs.width,cvs.height);
+                _this.nmap.drawmap();
+                _this.nmap.updatePos();
+            }, 300);
+            //window.requestAnimationFrame(_this.update);
+        }
+    }
+
+    function state() {
+        playerhp.innerHTML = 'HP:' + game.people.hp;
+        playerlevel.innerHTML = '等级:'+game.people.level;
+        playeratk.innerHTML = '攻击力:'+game.people.atk;
+        playerdef.innerHTML = '防御力:'+game.people.def;
+        playercoin.innerHTML = '金币:'+game.people.coin;
+        playerexp.innerHTML = '经验:'+game.people.exp;
+        yellownum.innerHTML = game.people.keyyellow;
+        bluenum.innerHTML = game.people.keyblue;
+        rednum.innerHTML = game.people.keyred;
+        floor.innerHTML = '第'+game.nmap.num + '层'
+    }
+
+    function onLoad() {
+        game = new Game();
+        game.update();
+        state();
+    }
+</script>
+</body>
+</html>
